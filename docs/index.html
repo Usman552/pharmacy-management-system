@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CityDrug — Online Pharmacy Management System</title>
+<meta name="description" content="Online pharmacy platform built with Laravel 12 and MySQL: pharmacist-verified prescriptions, inventory log, orders and an admin dashboard.">
+<meta property="og:title" content="CityDrug — Online Pharmacy Management System">
+<meta property="og:description" content="Laravel 12 + MySQL pharmacy e-commerce with a prescription verification workflow and admin dashboard.">
+<meta property="og:image" content="screenshots/01-home.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#087F5B;--green-d:#066A4C;--ink:#172B24;--mint:#E8F5EE;--lime:#C5E8A4;--bg:#F8FAF9;--line:#DCE5E0;--muted:#5D7068}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.65 'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--green);text-decoration:none}a:hover{color:var(--green-d)}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.15;margin:0 0 .5em;letter-spacing:-.02em}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:16px}
+.brand{font:700 21px 'Fraunces',serif;color:var(--ink)}.brand b{color:var(--green)}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:10px;border:1.5px solid var(--green);background:var(--green);color:#fff;font-weight:700;font-size:15px}
+.btn:hover{background:var(--green-d);color:#fff}.btn.alt{background:#fff;color:var(--green)}.btn.alt:hover{background:var(--mint)}
+.hero{background:linear-gradient(180deg,#E3F3EA,var(--bg));padding:64px 0 40px;text-align:center}
+.pill{display:inline-block;background:#fff;border:1px solid #D3EBDF;border-radius:99px;padding:6px 14px;font-weight:700;font-size:13px;color:#054A37;margin-bottom:18px}
+.hero h1{font-size:clamp(34px,6vw,60px);max-width:860px;margin:0 auto 16px}.hero h1 em{color:var(--green);font-style:normal}
+.hero p.lead{max-width:680px;margin:0 auto 26px;color:var(--muted);font-size:18px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero img.shot{margin:44px auto 0;max-width:1000px;width:100%;border-radius:18px;border:6px solid #fff;box-shadow:0 24px 60px rgba(8,127,91,.2)}
+section{padding:64px 0}section.alt{background:#fff;border-block:1px solid #EAF0EC}
+.eyebrow{font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:8px}
+h2{font-size:clamp(26px,4vw,38px)}.sub{color:var(--muted);max-width:640px;margin:0 0 32px}
+.grid{display:grid;gap:18px}.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
+section.alt .card{background:var(--bg)}
+.card h3{font:700 18px 'Manrope',sans-serif;margin:0 0 6px;letter-spacing:0}.card p{margin:0;color:var(--muted);font-size:15px}
+.ic{width:44px;height:44px;border-radius:12px;background:var(--mint);color:var(--green);display:grid;place-items:center;font-weight:800;margin-bottom:12px}
+figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+figure img{display:block;width:100%;height:auto}figcaption{padding:12px 16px;font-weight:700;font-size:14px}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:14px;max-width:760px}
+.steps li{counter-increment:s;display:flex;gap:14px}
+.steps li::before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;flex:none;margin-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}.tags span{background:var(--mint);color:#054A37;border-radius:99px;padding:6px 14px;font-weight:700;font-size:14px}
+pre{background:#0E2A21;color:#D9EFE5;border-radius:12px;padding:18px 20px;overflow-x:auto;font:14px/1.6 ui-monospace,Consolas,monospace;margin:0 0 16px}
+table{border-collapse:collapse;width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid #EEF3F0}th{background:var(--bg);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}tr:last-child td{border-bottom:0}
+code{background:#EEF3F0;padding:1px 6px;border-radius:6px;font-size:.92em}
+footer{background:#0E2A21;color:#B9D3C7;padding:36px 0;text-align:center;font-size:14px}footer a{color:#C5E8A4}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#">City<b>Drug</b></a>
+  <nav style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+    <a href="#features" style="font-weight:700;color:var(--ink)">Features</a>
+    <a href="#screenshots" style="font-weight:700;color:var(--ink)">Screenshots</a>
+    <a href="#run" style="font-weight:700;color:var(--ink)">Run it</a>
+    <a class="btn" href="https://github.com/Usman552/pharmacy-management-system" style="min-height:38px">GitHub</a>
+  </nav>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <span class="pill">Laravel 12 &middot; MySQL &middot; Open source project</span>
+  <h1>An online pharmacy where <em>prescriptions are verified</em> before anything is dispensed.</h1>
+  <p class="lead">A complete storefront and admin back office: catalogue and stock, orders, coupons, and a pharmacist review workflow for prescription-only medicines.</p>
+  <div class="cta">
+    <a class="btn" href="https://github.com/Usman552/pharmacy-management-system">View the code</a>
+    <a class="btn alt" href="#run">Run it locally</a>
+  </div>
+  <img class="shot" src="screenshots/01-home.jpg" alt="CityDrug storefront home page">
+</div></section>
+
+<section id="features"><div class="wrap">
+  <span class="eyebrow">Features</span><h2>Built around safe dispensing</h2>
+  <p class="sub">What the platform does for customers and for the pharmacy team.</p>
+  <div class="grid g3">
+    <div class="card"><div class="ic">Rx</div><h3>Prescription verification</h3><p>Staff upload a prescription for a specific customer, match each line to a product, and a pharmacist verifies it. Only then can the customer add those medicines, up to the approved quantity.</p></div>
+    <div class="card"><div class="ic">&#128274;</div><h3>Server-trusted checkout</h3><p>The browser never sets a price. Totals, stock, coupons and prescription limits are recalculated from the database in a transaction.</p></div>
+    <div class="card"><div class="ic">&#128230;</div><h3>Auditable inventory</h3><p>Every stock change is logged with who, why and the new balance. Row locks prevent overselling; cancelling an order returns stock.</p></div>
+    <div class="card"><div class="ic">&#128722;</div><h3>Storefront</h3><p>Search, category / brand / price filters, product pages, cart drawer, coupons, guest or account checkout and Google sign-in.</p></div>
+    <div class="card"><div class="ic">&#128202;</div><h3>Admin dashboard</h3><p>Real figures for orders, paid revenue, low stock and top sellers, plus products, categories, coupons, customers and a messages inbox.</p></div>
+    <div class="card"><div class="ic">&#128100;</div><h3>Roles &amp; privacy</h3><p>Customers, pharmacists, administrators and super administrators. Prescription files live on a private disk with an audit trail.</p></div>
+  </div>
+</div></section>
+
+<section id="screenshots" class="alt"><div class="wrap">
+  <span class="eyebrow">Screenshots</span><h2>A look around</h2>
+  <p class="sub">Fictional demo data. Product photos for a few items are from Open Beauty / Food Facts contributors (CC BY-SA).</p>
+  <div class="grid g2">
+    <figure><img loading="lazy" src="screenshots/02-shop.jpg" alt="Shop with filters"><figcaption>Shop with filters and sorting</figcaption></figure>
+    <figure><img loading="lazy" src="screenshots/03-product-rx.jpg" alt="Prescription medicine page"><figcaption>Prescription-only medicine</figcaption></figure>
+    <figure><img loading="lazy" src="screenshots/06-admin-dashboard.jpg" alt="Admin dashboard"><figcaption>Admin dashboard</figcaption></figure>
+    <figure><img loading="lazy" src="screenshots/08-admin-prescription-review.jpg" alt="Prescription review"><figcaption>Prescription review and verification</figcaption></figure>
+    <figure><img loading="lazy" src="screenshots/07-admin-products.jpg" alt="Product management"><figcaption>Product management</figcaption></figure>
+    <figure><img loading="lazy" src="screenshots/09-admin-inventory.jpg" alt="Inventory"><figcaption>Inventory with stock history</figcaption></figure>
+    <figure><img loading="lazy" src="screenshots/10-admin-order.jpg" alt="Order management"><figcaption>Order management</figcaption></figure>
+    <figure><img loading="lazy" src="screenshots/05-mobile-home.jpg" alt="Mobile home page" style="max-width:380px;margin:0 auto"><figcaption>Mobile</figcaption></figure>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow">How a prescription works</span><h2>From upload to cart</h2>
+  <ol class="steps">
+    <li><div><strong>Pick the customer, upload the prescription.</strong> JPG, PNG or PDF, stored privately.</div></li>
+    <li><div><strong>Enter the medicines as written.</strong> Optional OCR can pre-fill them as unverified suggestions.</div></li>
+    <li><div><strong>Match each line to a product.</strong> Suggestions show how confident the match is; nothing is auto-selected.</div></li>
+    <li><div><strong>A pharmacist verifies (or rejects with a reason).</strong> Every step is written to an audit trail.</div></li>
+    <li><div><strong>The customer reviews and orders.</strong> Verified items go to their own cart; nothing is ordered or charged automatically.</div></li>
+  </ol>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <span class="eyebrow">Tech stack</span><h2>What it is built with</h2>
+  <div class="tags">
+    <span>PHP 8.2+</span><span>Laravel 12</span><span>MySQL</span><span>Blade</span><span>Bootstrap 5</span><span>Vanilla JS</span><span>Google OAuth 2.0</span><span>PHPUnit (59 tests)</span>
+  </div>
+</div></section>
+
+<section id="run"><div class="wrap">
+  <span class="eyebrow">Run it</span><h2>Get it running locally</h2>
+  <p class="sub">GitHub Pages only hosts this showcase; the application itself needs PHP and MySQL.</p>
+<pre>git clone https://github.com/Usman552/pharmacy-management-system.git
+cd pharmacy-management-system
+composer install
+cp .env.example .env
+php artisan key:generate
+# set DB_DATABASE / DB_USERNAME / DB_PASSWORD in .env, then:
+php artisan migrate --seed
+php artisan serve --port=8090</pre>
+  <p>Open <code>http://127.0.0.1:8090</code>. Admin panel: <code>/admin</code>.</p>
+  <table>
+    <thead><tr><th>Role</th><th>Email</th><th>Password (demo)</th></tr></thead>
+    <tbody>
+      <tr><td>Administrator</td><td><code>admin@citydrug.pk</code></td><td><code>admin123</code></td></tr>
+      <tr><td>Pharmacist</td><td><code>pharmacist@citydrug.pk</code></td><td><code>pharmacist123</code></td></tr>
+      <tr><td>Customer</td><td><code>customer@example.com</code></td><td><code>password</code></td></tr>
+    </tbody>
+  </table>
+  <p style="color:var(--muted);font-size:14px">Demo credentials for local use only. Change them before any real deployment.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p style="margin:0 0 6px">CityDrug &middot; <a href="https://github.com/Usman552/pharmacy-management-system">github.com/Usman552/pharmacy-management-system</a></p>
+  <p style="margin:0;opacity:.8">Hero photography from Unsplash. Fonts: Fraunces and Manrope.</p>
+</div></footer>
+</body>
+</html>
