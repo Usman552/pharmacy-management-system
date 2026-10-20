@@ -1,0 +1,25 @@
+# CityDrug Pakistan - robots.txt
+User-agent: *
+Allow: /
+
+# Block admin and auth pages
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+Disallow: /logout
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account/
+Disallow: /forgot-password
+Disallow: /reset-password
+
+# Allow important pages
+Allow: /blog/
+Allow: /products/
+Allow: /categories/
+
+# Sitemap
+Sitemap: https://citydrug.pk/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
